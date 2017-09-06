@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
-        "start": "supervisor --harmony index --port 9999"
+        "start": "supervisor --harmony index"
     },
     "repository": {
         "type": "git",
@@ -27,6 +27,7 @@
         "express-formidable": "^1.0.0",
         "express-session": "^1.15.5",
         "express-winston": "^2.4.0",
+        "bluebird": "^3.5.0",
         "jquery": "^3.2.1",
         "marked": "^0.3.6",
         "moment": "^2.18.1",
