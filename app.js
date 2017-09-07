@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var session = require('express-session');
+var mongo = require('./lib/mongo');
 var MongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
 var config = require('config-lite')(__dirname);
@@ -11,15 +12,11 @@ var expressWinston = require('express-winston');
 var app = express();
 
 app.all('*', (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", req.headers.origin || '*');
+    res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Credentials", true); //可以带cookies
-    if (req.method == 'OPTIONS') {
-        res.send(200);
-    } else {
-        next();
-    }
+    next();
 });
 
 //设置模板目录和模板引擎
@@ -27,6 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //session
+MongoStore
 app.use(session({
     name: config.session.key,
     secret: config.session.secret,
