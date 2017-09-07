@@ -13,7 +13,7 @@ class Admin {
             }
         }
         catch (err) {
-            res.send({
+            res.status(200).send({
                 status: 0,
                 type: 'ADMIN_LOGIN_PARAM',
                 message: err.message,
@@ -22,36 +22,28 @@ class Admin {
         }
         try {
             var newPsd = sha1(password);
-            const admin = await (AdminModel.findOne({ user_name }).exec());
-            if (err) {
-                res.res.sendStatus({
-                    status: 0,
-                    type: 'ADMIN_LOGIN_FAILED',
-                    message: err,
-                });
-                return false;
-            }
+            const admin = await AdminModel.findOne({ user_name }).exec();
             if (!admin) {
-                var newAdmin = {
-                    user_name,
-                    password: newPsd,
-                    avatara: '',
-                    description: ''
-                };
-                AdminModel.create(newAdmin);
-                req.session.admin = newAdmin;
-                res.send({
-                    status: 1,
-                    success: '注册管理员成功',
-                });
-                // res.send({
-                //     status: 0,
-                //     type: 'ADMIN_LOGIN_PARAM',
-                //     message: '用户名或密码输入错误',
+                // var newAdmin = {
+                //     user_name,
+                //     password: newPsd,
+                //     avatara: '',
+                //     description: ''
+                // };
+                // AdminModel.create(newAdmin);
+                // req.session.admin = newAdmin;
+                // res.status(200).send({
+                //     status: 1,
+                //     success: '注册管理员成功'
                 // });
+                res.status(200).send({
+                    status: 0,
+                    type: 'ADMIN_LOGIN_PARAM',
+                    message: '用户名或密码输入错误',
+                });
             }
             else if (newPsd !== admin.password) {
-                res.send({
+                res.status(200).send({
                     status: 0,
                     type: 'ADMIN_LOGIN_PARAM',
                     message: '用户名或密码输入错误',
@@ -59,14 +51,14 @@ class Admin {
             }
             else {
                 req.session.admin = admin;
-                res.send({
+                res.status(200).send({
                     status: 1,
                     success: '登录成功'
                 });
             }
         }
         catch (err) {
-            res.send({
+            res.status(500).send({
                 status: 0,
                 type: 'ADMIN_LOGIN_FAILED',
                 message: err,
