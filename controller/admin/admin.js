@@ -14,9 +14,9 @@ class Admin {
         }
         catch (err) {
             res.status(200).send({
-                status: 0,
+                ok: true,
                 type: 'ADMIN_LOGIN_PARAM',
-                message: err.message,
+                data: err.message,
             });
             return false;
         }
@@ -33,35 +33,35 @@ class Admin {
                 // AdminModel.create(newAdmin);
                 // req.session.admin = newAdmin;
                 // res.status(200).send({
-                //     status: 1,
-                //     success: '注册管理员成功'
+                //     ok: true,
+                //     data: '注册管理员成功'
                 // });
                 res.status(200).send({
-                    status: 0,
+                    ok: 0,
                     type: 'ADMIN_LOGIN_PARAM',
-                    message: '用户名或密码输入错误',
+                    data: '用户名或密码输入错误',
                 });
             }
             else if (newPsd !== admin.password) {
                 res.status(200).send({
-                    status: 0,
+                    ok: 0,
                     type: 'ADMIN_LOGIN_PARAM',
-                    message: '用户名或密码输入错误',
+                    data: '用户名或密码输入错误',
                 });
             }
             else {
                 req.session.admin = admin;
                 res.status(200).send({
-                    status: 1,
-                    success: '登录成功'
+                    ok: 1,
+                    data: '登录成功'
                 });
             }
         }
         catch (err) {
             res.status(500).send({
-                status: 0,
+                ok: 0,
                 type: 'ADMIN_LOGIN_FAILED',
-                message: err,
+                data: err,
             });
             return false;
         }
