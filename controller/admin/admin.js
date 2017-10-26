@@ -14,7 +14,7 @@ class Admin {
         }
         catch (err) {
             res.status(200).send({
-                ok: true,
+                ok: false,
                 type: 'ADMIN_LOGIN_PARAM',
                 data: err.message,
             });
@@ -37,14 +37,14 @@ class Admin {
                 //     data: '注册管理员成功'
                 // });
                 res.status(200).send({
-                    ok: 0,
+                    ok: false,
                     type: 'ADMIN_LOGIN_PARAM',
                     data: '用户名或密码输入错误',
                 });
             }
             else if (newPsd !== admin.password) {
                 res.status(200).send({
-                    ok: 0,
+                    ok: false,
                     type: 'ADMIN_LOGIN_PARAM',
                     data: '用户名或密码输入错误',
                 });
@@ -52,14 +52,14 @@ class Admin {
             else {
                 req.session.admin = admin;
                 res.status(200).send({
-                    ok: 1,
+                    ok: true,
                     data: '登录成功'
                 });
             }
         }
         catch (err) {
             res.status(500).send({
-                ok: 0,
+                ok: false,
                 type: 'ADMIN_LOGIN_FAILED',
                 data: err,
             });
