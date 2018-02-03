@@ -2,7 +2,7 @@ var sha1 = require('sha1');
 var AdminModel = require('../../models/admin');
 
 class Admin {
-    async login(req, res, next) {
+    async Login(req, res, next) {
         var { user_name, password } = req.fields;
         try {
             if (!user_name) {
