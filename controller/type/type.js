@@ -23,7 +23,7 @@ class Type {
     }
     async AddType(req, res, next) {
         try {
-            await TypeModel.insertMany()
+            //await TypeModel.insertMany();
             res.status(200).send({
                 ok: true,
                 data: "新增分类成功!",

@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 var typeSchema = new Schema({
     name: String,
-    description: String,
     status: Number,
     create_time: { type: Date, default: Date.now },
 });
