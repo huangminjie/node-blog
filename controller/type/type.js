@@ -23,10 +23,23 @@ class Type {
     }
     async AddType(req, res, next) {
         try {
-            //await TypeModel.insertMany();
-            res.status(200).send({
-                ok: true,
-                data: "新增分类成功!",
+            TypeModel.create({
+                name: req.fields.name,
+                status: req.fields.status
+            }, (err, type) => {
+                if (err) {
+                    res.status(500).send({
+                        ok: false,
+                        type: 'Type_AddTypes_FAILED',
+                        data: err,
+                    });
+                }
+                else {
+                    res.status(200).send({
+                        ok: true,
+                        data: "新增分类成功!",
+                    });
+                }
             });
         }
         catch (err) {
