@@ -10,7 +10,6 @@
             "name": "Launch Program",
             "cwd": "${workspaceRoot}",
             "args": [
-                "--harmony_async_await",
                 "index.js"
             ]
         }
