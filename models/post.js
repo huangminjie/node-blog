@@ -7,6 +7,7 @@ var postSchema = new Schema({
     digest: String,
     tag: String,
     text: String,
+    status: Number,
     create_time: { type: Date, default: Date.now },
 });
 
