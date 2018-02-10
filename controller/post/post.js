@@ -10,12 +10,12 @@ class Post {
                 posts = [];
             }
             else {
-                posts.forEach((post) => {
-                    var type = await TypeModel
+                posts.forEach(async (post) => {
+                    var type = await TypeModel.findById(post.type);
                     data.push({
                         id: post.id,
                         title: post.title,
-                        type: post,
+                        type: type !== null ? type.name : "",
                         digest: post.digest,
                         tag: post.tag,
                         text: post.text,
@@ -33,13 +33,20 @@ class Post {
             res.status(500).send({
                 ok: false,
                 type: 'Post_GetPosts_FAILED',
-                data: err,
+                data: err
             });
         }
     }
     async AddPost(req, res, next) {
         try {
-
+            await PostModel.create({
+                title: req.fields.title,
+                type: req.fields.type,
+                digest: req.fields.digest,
+                tag: req.fields.tag,
+                text: req.fields.text,
+                status: 0
+            });
             res.status(200).send({
                 ok: true,
                 data: "新增文章成功!",
