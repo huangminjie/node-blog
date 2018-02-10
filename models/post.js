@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
     title: String,
-    type: Number,
+    type: String,
     digest: String,
     tag: String,
     text: String,
