@@ -10,7 +10,7 @@ class Post {
                 posts = [];
             }
             else {
-                posts.forEach(async (post) => {
+                for (const post of posts) {
                     var type = await TypeModel.findById(post.type);
                     data.push({
                         id: post.id,
@@ -20,9 +20,9 @@ class Post {
                         tag: post.tag,
                         text: post.text,
                         create_time: post.create_time.toLocaleDateString() + ' ' + post.create_time.toLocaleTimeString(),
-                        status: post.status
+                        status: Post.toPostStatusText(post.status)
                     });
-                });
+                }
             }
             res.status(200).send({
                 ok: true,
@@ -33,7 +33,7 @@ class Post {
             res.status(500).send({
                 ok: false,
                 type: 'Post_GetPosts_FAILED',
-                data: err
+                data: err.message
             });
         }
     }
@@ -73,6 +73,18 @@ class Post {
                 type: 'Post_UpdatePost_FAILED',
                 data: err,
             });
+        }
+    }
+    static toPostStatusText(status) {
+        switch (status) {
+            case -1:
+                return "删除";
+            case 0:
+                return "待审核";
+            case 1:
+                return "已发布";
+            default:
+                return "";
         }
     }
 }
