@@ -15,7 +15,8 @@ class Post {
                     data.push({
                         id: post.id,
                         title: post.title,
-                        type: type !== null ? type.name : "",
+                        typeText: type !== null ? type.name : "",
+                        type: post.type,
                         digest: post.digest,
                         tag: post.tag,
                         text: post.text,
