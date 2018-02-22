@@ -9,6 +9,7 @@ var routes = require('./routes');
 var pkg = require('./package');
 var winston = require('winston');
 var expressWinston = require('express-winston');
+var bodyParser = require('body-parser');
 var app = express();
 
 app.all('*', (req, res, next) => {
@@ -48,16 +49,14 @@ app.use(function (req, res, next) {
     next();
 });
 
-// 处理表单及文件上传的中间件
-app.use(require('express-formidable')({
-    uploadDir: path.join(__dirname, 'public/img'),// 上传文件目录
-    keepExtensions: true// 保留后缀
-}));
-
 app.locals.blog = {
     title: pkg.name,
     description: pkg.description
-}
+};
+
+//bodyParser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //logs
 app.use(expressWinston.logger({

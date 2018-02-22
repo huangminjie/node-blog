@@ -3,7 +3,7 @@ var AdminModel = require('../../models/admin');
 
 class Admin {
     async Login(req, res, next) {
-        var { user_name, password } = req.fields;
+        var { user_name, password } = req.body;
         try {
             if (!user_name) {
                 throw new Error('用户名参数错误!');
@@ -22,7 +22,7 @@ class Admin {
         }
         try {
             var newPsd = sha1(password);
-            const admin = await AdminModel.findOne({ user_name }).exec();
+            const admin = await AdminModel.findOne({ user_name });
             if (!admin) {
                 // var newAdmin = {
                 //     user_name,
