@@ -4,13 +4,13 @@ var TypeModel = require('../../models/type');
 class Post {
     async GetPosts(req, res, next) {
         try {
-            var posts = await PostModel.find({});
+            var posts = await PostModel.find();
             var data = [];
             if (!Array.isArray(posts)) {
                 posts = [];
             }
             else {
-                for (const post of posts) {
+                for (let post of posts) {
                     var type = await TypeModel.findById(post.type);
                     data.push({
                         id: post.id,
@@ -41,11 +41,11 @@ class Post {
     async AddPost(req, res, next) {
         try {
             await PostModel.create({
-                title: req.fields.title,
-                type: req.fields.type,
-                digest: req.fields.digest,
-                tag: req.fields.tag,
-                text: req.fields.text,
+                title: req.body.title,
+                type: req.body.type,
+                digest: req.body.digest,
+                tag: req.body.tag,
+                text: req.body.text,
                 status: 0
             });
             res.status(200).send({
@@ -63,7 +63,14 @@ class Post {
     }
     async UpdatePost(req, res, next) {
         try {
-
+            var id = req.params.id;
+            await PostModel.findByIdAndUpdate(id, {
+                title: req.body.title,
+                type: req.body.type,
+                digest: req.body.digest,
+                tag: req.body.tag,
+                text: req.body.text
+            });
             res.status(200).send({
                 ok: true,
                 data: "修改文章成功！",

@@ -34,8 +34,8 @@ class Type {
     async AddType(req, res, next) {
         try {
             await TypeModel.create({
-                name: req.fields.name,
-                status: req.fields.status
+                name: req.body.name,
+                status: req.body.status
             });
             res.status(200).send({
                 ok: true,
@@ -54,8 +54,8 @@ class Type {
         try {
             var id = req.params.id;
             await TypeModel.findByIdAndUpdate(id, {
-                name: req.fields.name,
-                status: req.fields.status
+                name: req.body.name,
+                status: req.body.status
             });
             res.status(200).send({
                 ok: true,
