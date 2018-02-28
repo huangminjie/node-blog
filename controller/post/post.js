@@ -21,7 +21,8 @@ class Post {
                         tag: post.tag,
                         text: post.text,
                         create_time: post.create_time.toLocaleDateString() + ' ' + post.create_time.toLocaleTimeString(),
-                        status: Post.toPostStatusText(post.status)
+                        status: post.status,
+                        statusTex: Post.toPostStatusText(post.status)
                     });
                 }
             }
@@ -85,8 +86,6 @@ class Post {
     }
     static toPostStatusText(status) {
         switch (status) {
-            case -1:
-                return "删除";
             case 0:
                 return "待审核";
             case 1:
