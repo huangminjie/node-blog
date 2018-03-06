@@ -4,12 +4,24 @@ var TypeModel = require('../../models/type');
 class Post {
     async GetPosts(req, res, next) {
         try {
-            var posts = await PostModel.find();
-            var data = [];
+            var query = PostModel.find();
+            if (req.query.status) {
+                query = query.where('status').equals(req.query.status);
+            }
+            if (req.query.type) {
+                query = query.where('type').equals(req.query.type);
+            }
+            if (req.query.isRecent) {
+                var date = new Date();
+                date.setMonth(date.getMonth() - 3);
+                query = query.where('create_time').gt(date);
+            }
+            var posts = await query;
             if (!Array.isArray(posts)) {
                 posts = [];
             }
             else {
+                var data = [];
                 for (let post of posts) {
                     var type = await TypeModel.findById(post.type);
                     data.push({
