@@ -2,7 +2,7 @@ var PostModel = require('../../models/post');
 var TypeModel = require('../../models/type');
 
 class Post {
-    async GetPosts(req, res, next) {
+    async GetPostsInfo(req, res, next) {
         try {
             var query = PostModel.find();
             if (req.query.status) {
@@ -31,7 +31,6 @@ class Post {
                         type: post.type,
                         digest: post.digest,
                         tag: post.tag,
-                        text: post.text,
                         create_time: post.create_time.toLocaleDateString() + ' ' + post.create_time.toLocaleTimeString(),
                         status: post.status,
                         statusTex: Post.toPostStatusText(post.status)
@@ -86,12 +85,29 @@ class Post {
             });
             res.status(200).send({
                 ok: true,
-                data: "修改文章成功！",
+                data: "修改文章成功！"
             });
         } catch (err) {
             res.status(500).send({
                 ok: false,
                 type: 'Post_UpdatePost_FAILED',
+                data: err,
+            });
+        }
+    }
+    async GetPostText(req, res, next) {
+        try {
+            var id = req.params.id;
+            var post = await PostModel.findById(id);
+            res.status(200).send({
+                ok: true,
+                data: post.text
+            });
+        }
+        catch (err) {
+            res.status(500).send({
+                ok: false,
+                type: 'Post_GetGetPostText_FAILED',
                 data: err,
             });
         }
