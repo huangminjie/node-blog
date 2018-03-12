@@ -112,6 +112,48 @@ class Post {
             });
         }
     }
+    async UpdatePostAuditState(req, res, next) {
+        try {
+            var id = req.params.id;
+            await PostModel.findByIdAndUpdate(id, { status: req.body.status });
+            res.status(200).send({
+                ok: true,
+                data: "修改授权状态成功！"
+            });
+        }
+        catch (err) {
+            res.status(500).send({
+                ok: false,
+                type: 'Post_UpdatePostAuditState_FAILED',
+                data: err,
+            });
+        }
+    }
+    async DeletePost(req, res, next) {
+        try {
+            var id = req.params.id;
+            var post = await PostModel.findByIdAndRemove(id);
+            if (post) {
+                res.status(200).send({
+                    ok: true,
+                    data: "删除文章成功！"
+                });
+            }
+            else {
+                res.status(500).send({
+                    ok: false,
+                    data: "该文章已被删除！"
+                });
+            }
+        }
+        catch (err) {
+            res.status(500).send({
+                ok: false,
+                type: 'Post_DeletePost_FAILED',
+                data: err,
+            });
+        }
+    }
     static toPostStatusText(status) {
         switch (status) {
             case 0:
